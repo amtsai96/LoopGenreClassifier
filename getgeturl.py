@@ -13,7 +13,7 @@ import re
 total_index = 0  # for dataset
 ####
 download_path = 'C:/Users/amandatsai/Downloads'
-start_genre = 51
+start_genre = 63
 start_page = 1
 
 # account_index=0
@@ -144,7 +144,7 @@ def main():
     #browser.find_element_by_link_text('Loops & Samples').click()
     os.chdir(download_path)
 
-    for i in range(start_genre, 65):
+    for i in range(start_genre, start_genre+1):#65):
         # by genre selector
         s = Select(browser.find_element_by_name('gid'))
         s.select_by_index(i)

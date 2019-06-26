@@ -27,7 +27,7 @@ download_path = 'C:/Users/amandatsai/Downloads'
 download_size = 150
 ####
 
-account_index = 32
+account_index = 29
 account_list = []
 change_index = 0  # set for limited download
 start_genre = 1  # start index of genre i
@@ -62,7 +62,7 @@ def login(browser):
     password.clear()
     user.send_keys(account_list[account_index][0])
     password.send_keys(account_list[account_index][1])
-    account_index = (account_index+1) % len(account_list)
+    account_index = max(16, (account_index+1) % len(account_list))
 
     while(user_agree.is_selected() == False):
         sleep(random.uniform(0.2, 1.0))
@@ -204,7 +204,7 @@ def getfiles(browser, isFirst):
         renameDone = False
         total_index = total_index+1
         change_index = change_index+1
-        
+
         if os.path.exists(metadata_file):
             append_write = 'a'
         else:  # create new file
@@ -262,7 +262,7 @@ def main():
         s = Select(browser.find_element_by_name('gid'))
         s.select_by_index(i)
         genre_name = s.first_selected_option.text
-        print(s.first_selected_option.text)
+        print(i, s.first_selected_option.text)
         print(s.first_selected_option.text, file=open(log_file, 'a'))
         # browser.find_element_by_class_name('form-button').click()
         genre_name = genre_name.replace(' ', '-').lower()
