@@ -11,9 +11,10 @@ import re
 
 ####
 total_index = 0  # for dataset
+# last_Page = max(int(input('Enter start "last_page":')), 0)
 ####
 download_path = 'C:/Users/amandatsai/Downloads'
-start_genre = 63
+start_genre = 15
 start_page = 1
 
 # account_index=0
@@ -21,16 +22,16 @@ start_page = 1
 # change_index=0 #set for limited download
 
 
-def read_account():
-    global account_list
-    myWorkbook = xlrd.open_workbook("account.xlsx")
-    mySheets = myWorkbook.sheets()
-    mySheet = mySheets[0]
-    print("Read Total Account:")
-    for i in range(mySheet.nrows):
-        myRowValues = mySheet.row_values(i)
-        print(myRowValues)
-        account_list.append(myRowValues)
+# def read_account():
+#     global account_list
+#     myWorkbook = xlrd.open_workbook("account.xlsx")
+#     mySheets = myWorkbook.sheets()
+#     mySheet = mySheets[0]
+#     print("Read Total Account:")
+#     for i in range(mySheet.nrows):
+#         myRowValues = mySheet.row_values(i)
+#         print(myRowValues)
+#         account_list.append(myRowValues)
 
 
 # def login(browser):
@@ -125,7 +126,7 @@ def getfiles(browser):
 
 
 def main():
-
+    
     # set download path (ex: D:\\)
     options = Options()
     options.add_experimental_option("prefs", {
@@ -154,11 +155,14 @@ def main():
         genre_name = genre_name.replace(' ', '-').lower()
         browser.get('https://www.looperman.com/loops/genres/royalty-free-'+genre_name+'-loops-samples-sounds-wavs-download')
         # get genre last page
-        url = browser.find_element_by_link_text('Last').get_attribute('href')
+        # url = browser.find_element_by_link_text('Last').get_attribute('href')
         # temp = url.split('=', 1)
         # last_Page = temp[1].split('&', 1)[0]
-        last_Page = url.split('=', 1)[-1]
-        print("last_Page:"+str(last_Page))
+
+        # if(last_Page == 0):
+        #     url = browser.find_element_by_link_text('Last').get_attribute('href')
+        #     last_Page = url.split('=', 1)[-1]
+        # print("last_Page:"+str(last_Page))
 
         # page href form
         first_page = browser.current_url

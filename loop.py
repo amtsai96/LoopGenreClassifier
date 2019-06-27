@@ -13,12 +13,13 @@ import datetime
 ####
 # total_index = 0
 total_index = max(int(input('Enter start "total_index":')), 0)  # for dataset
+last_Page = max(int(input('Enter start "last_page":')), 0)
 metadata_file = './data/data.txt'
-current_page_urls = './data/current_urls.txt'
+current_page_urls = './data/current_urls2.txt'#'./data/current_urls.txt'
 # record [the last index] which was already done
-current_index = './data/current_index.txt'
+current_index = './data/current_index2.txt' #'./data/current_index.txt'
 # record [category / pages] which was already done
-current_page = './data/current_page.txt'
+current_page = './data/current_page2.txt' #'./data/current_page.txt'
 
 not_edited_files = './data/not_edited_files.txt'
 log_file = './data/log' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.txt'
@@ -27,7 +28,7 @@ download_path = 'C:/Users/amandatsai/Downloads'
 download_size = 150
 ####
 
-account_index = 29
+account_index = 26
 account_list = []
 change_index = 0  # set for limited download
 start_genre = 1  # start index of genre i
@@ -43,7 +44,6 @@ def read_account():
     print("Read Total Account...")
     for i in range(mySheet.nrows):
         myRowValues = mySheet.row_values(i)
-        # print(myRowValues)
         account_list.append(myRowValues)
 
 
@@ -70,7 +70,6 @@ def login(browser):
     sleep(random.uniform(0.95, 3.01))  # avoid bang bang bang!!!
     btn.click()
 
-
 def getfiles(browser, isFirst):
     global change_index
     global total_index
@@ -81,9 +80,6 @@ def getfiles(browser, isFirst):
         isFirst = False
         if os.path.exists(current_index) and os.path.exists(current_page):
             get_new_links = False
-            # with open(current_page, 'r') as i:
-            #     start_genre = int(i.readline())  # [i value] of genre
-            #     start_page = int(i.readline())
             with open(current_index, 'r') as i:
                 start_index = int(i.readline()) + 1
 
@@ -226,6 +222,7 @@ def getfiles(browser, isFirst):
 def main():
     global start_genre
     global start_page
+    global last_Page
     # set download path (ex: D:\\)
     options = Options()
     options.add_experimental_option("prefs", {
@@ -270,10 +267,11 @@ def main():
                     genre_name+'-loops-samples-sounds-wavs-download')
 
         # get genre last page
-        url = browser.find_element_by_link_text('Last').get_attribute('href')
-        # temp = url.split('=', 1)
-        # last_Page = temp[1].split('&', 1)[0]
-        last_Page = url.split('=', 1)[-1]
+        if (last_Page == 0):
+            url = browser.find_element_by_link_text('Last').get_attribute('href')
+            # temp = url.split('=', 1)
+            # last_Page = temp[1].split('&', 1)[0]
+            last_Page = url.split('=', 1)[-1]
         print("last_Page:"+str(last_Page))
 
         # page href form
