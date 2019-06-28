@@ -11,15 +11,16 @@ import re
 import datetime
 
 ####
-# total_index = 0
 total_index = max(int(input('Enter start "total_index":')), 0)  # for dataset
 last_Page = max(int(input('Enter start "last_page":')), 0)
+account_index = max(min(int(input('Enter start "account_index":')), 43), 16)
 metadata_file = './data/data.txt'
-current_page_urls = './data/current_urls2.txt'#'./data/current_urls.txt'
+
+current_page_urls = './data/current_urls.txt'
 # record [the last index] which was already done
-current_index = './data/current_index2.txt' #'./data/current_index.txt'
+current_index = './data/current_index.txt'
 # record [category / pages] which was already done
-current_page = './data/current_page2.txt' #'./data/current_page.txt'
+current_page = './data/current_page.txt'
 
 not_edited_files = './data/not_edited_files.txt'
 log_file = './data/log' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.txt'
@@ -28,7 +29,7 @@ download_path = 'C:/Users/amandatsai/Downloads'
 download_size = 150
 ####
 
-account_index = 26
+#account_index = 26
 account_list = []
 change_index = 0  # set for limited download
 start_genre = 1  # start index of genre i
@@ -56,7 +57,7 @@ def login(browser):
     user_agree = browser.find_element_by_id('user_disclaimer')
 
     print(">>> Current Account: "+account_list[account_index][0])
-    print(">>> Current Account: " +
+    print(">>> Current Account: " +str(account_index)+"_"+
           account_list[account_index][0], file=open(log_file, 'a'))
     user.clear()
     password.clear()
