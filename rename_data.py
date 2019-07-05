@@ -1,10 +1,11 @@
 import os
 import json
+dataf = input('Enter filename:')
 index = int(input('Enter original_start index:'))
 end = int(input('Enter original_end index:'))
 st = int(input('Enter new_start index:'))
 new = 'data_new_'+str(index)+'-'+str(end)+'_'+str(st)+'-'+str(st+end-index)+'.txt'
-with open('data_test.txt','r+') as f:
+with open(dataf,'r+') as f:
     with open(new,'w') as o:
         i=0
         for line in f.readlines():
