@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import json
 
 G_FLAG = False
-B_FLAG = False#True
-K_FLAG = True
+B_FLAG = True
+K_FLAG = False#True
 
-dataf = 'data_all.txt'#input('Enter data file name:')
+dataf = 'data_draw.txt'#'data_all.txt'#input('Enter data file name:')
 out = 'out.txt'#input('Enter output data file name:')
 out_b = 'out_BPM.txt'
 out_k = 'out_KEY.txt'
@@ -24,7 +24,7 @@ with open(dataf, 'r') as i:
                 else: tags[tt] = 1
             if t.endswith('bpm'):
                 tt = t.split(' ')[0]
-                tt = (str(int(tt)//5*5))
+                tt = (str(int(tt)//10*10))
                 if tt in bpm: bpm[tt] += 1
                 else: bpm[tt] = 1
             if t.startswith('Key'):
@@ -62,16 +62,18 @@ if(G_FLAG):
     plt.tick_params(axis='y', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_genres.jpg', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig('looperman_dataset_genres.png', bbox_inches='tight', pad_inches=0.0)
     #plt.show()
 
 if(B_FLAG):
     print('--------------------BPM--------------------')
     # by BPM
-    ts = [t for t in bpm]
+    b = sorted(bpm.items(), key=lambda k:int(k[0]))
+    ts = [t[0] for t in b]
+    vs = [t[1] for t in b]
     s = 1
     y_pos = np.arange(0, len(ts)*s, s)
-    vs = [bpm[t] for t in bpm]
+    
     print(len(bpm))
     print(bpm)
 
@@ -82,7 +84,7 @@ if(B_FLAG):
     # Plot - by BPM
     plt.figure(figsize=(23, 17), num='Looperman Dataset')
     plt.bar(ts, vs, align='center', alpha=0.5, color='red')
-    for a, b in zip(y_pos, vs):plt.text(a-.5, b+1, str(b))
+    for a, b in zip(y_pos, vs):plt.text(a, b+2, str(b), ha='center')
     #plt.yticks(y_pos, ts)
     plt.ylabel('Data #')
     plt.xlabel('BPM')
@@ -91,7 +93,7 @@ if(B_FLAG):
     plt.tick_params(axis='x', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_bpm.jpg', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig('looperman_dataset_bpm.png', bbox_inches='tight', pad_inches=0.0)
     #plt.show()
 
 if(K_FLAG):
@@ -121,6 +123,6 @@ if(K_FLAG):
     plt.tick_params(axis='y', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_keys.jpg', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig('looperman_dataset_keys.png', bbox_inches='tight', pad_inches=0.0)
     #plt.show()
 
