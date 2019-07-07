@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import json
 
 G_FLAG = False
-B_FLAG = True
-K_FLAG = False#True
+B_FLAG = False#True
+K_FLAG = True
 
 dataf = 'data_draw.txt'#'data_all.txt'#input('Enter data file name:')
 out = 'out.txt'#input('Enter output data file name:')
@@ -99,10 +99,13 @@ if(B_FLAG):
 if(K_FLAG):
     print('--------------------KEY--------------------')
     # by Keys
-    ts = [t for t in key]
+    k = sorted(key.items(), key=lambda a:a[0], reverse=True)
+    ts = [t[0] for t in k]
+    vs = [t[1] for t in k]
+    #ts = [t for t in key]
     s = 5
     y_pos = np.arange(0, len(ts)*s, s)
-    vs = [key[t] for t in key]
+    #vs = [key[t] for t in key]
     print(len(key))
     print(key)
 
