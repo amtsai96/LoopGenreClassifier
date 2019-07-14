@@ -12,7 +12,7 @@ inf = input('Enter input folder:')
 outf = 'I:\_spectrogram'
 if not os.path.exists(outf):
     os.makedirs(outf)
-
+'''
 def get_wav_info(wav_file):
     wav = wave.open(wav_file, 'r')
     frames = wav.readframes(-1)
@@ -20,7 +20,7 @@ def get_wav_info(wav_file):
     frame_rate = wav.getframerate()
     wav.close()
     return sound_info, frame_rate
-
+'''
 def graph_spectrogram(outf, inf, wav_file):
     # Load WAV Files
     ##sound_info, frame_rate = get_wav_info(os.path.join(inf,wav_file))

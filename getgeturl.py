@@ -14,7 +14,7 @@ total_index = 0  # for dataset
 # last_Page = max(int(input('Enter start "last_page":')), 0)
 ####
 download_path = 'C:/Users/amandatsai/Downloads'
-start_genre = 20
+start_genre = 24
 start_page = 1
 
 # account_index=0

@@ -1,33 +1,49 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import json
+import os
 
-G_FLAG = False
+G_FLAG = True#False
 B_FLAG = False#True
-K_FLAG = True
+K_FLAG = False
 
-dataf = 'data_draw.txt'#'data_all.txt'#input('Enter data file name:')
+FILES_VER = True
+
+dataf = 'data_all_29572.txt'#'data_all.txt'#input('Enter data file name:')
 out = 'out_GENRE.txt'#input('Enter output data file name:')
 out_b = 'out_BPM.txt'
 out_k = 'out_KEY.txt'
 genres = ['8Bit Chiptune', 'Acid', 'Acoustic', 'Ambient', 'Big Room', 'Blues', 'Boom Bap', 'Breakbeat', 'Chill Out', 'Cinematic', 'Classical', 'Comedy', 'Country', 'Crunk', 'Dance', 'Dancehall', 'Deep House', 'Dirty', 'Disco', 'Drum And Bass', 'Dub', 'Dubstep', 'EDM', 'Electro', 'Electronic', 'Ethnic', 'Folk', 'Funk', 'Fusion', 'Garage', 'Glitch', 'Grime', 'Grunge', 'Hardcore', 'Hardstyle', 'Heavy Metal', 'Hip Hop', 'House', 'Indie', 'Industrial', 'Jazz', 'Jungle', 'Lo-Fi', 'Moombahton', 'Orchestral', 'Pop', 'Psychedelic', 'Punk', 'Rap', 'Rave', 'Reggae', 'Reggaeton', 'Religious', 'RnB', 'Rock', 'Samba', 'Ska', 'Soul', 'Spoken Word', 'Techno', 'Trance', 'Trap', 'Trip Hop', 'Weird']
+
+if FILES_VER:
+    folder = input('enter the folder that contains files:')
+    files = os.listdir(folder)
 
 tags, bpm, key = dict(), dict(), dict()
 with open(dataf, 'r') as i:
     for line in i.readlines():
         if line=="\n": continue
         data = json.loads(line)
-        for t in data['tags']:  
+        for t in data['tags']: 
             if t.strip('Loops').strip(' ') in genres:
+                if FILES_VER:
+                    filename = data['index']+'.wav'
+                    if filename not in files: continue
                 tt = t.strip('Loops').strip(' ')
                 if tt in tags: tags[tt] += 1
                 else: tags[tt] = 1
             if t.endswith('bpm'):
+                if FILES_VER:
+                    filename = data['index']+'.wav'
+                    if filename not in files: continue
                 tt = t.split(' ')[0]
                 tt = (str(int(tt)//10*10))
                 if tt in bpm: bpm[tt] += 1
                 else: bpm[tt] = 1
             if t.startswith('Key'):
+                if FILES_VER:
+                    filename = data['index']+'.wav'
+                    if filename not in files: continue
                 tt = t.split(' ')[-1]
                 if tt in key: key[tt] += 1
                 else: key[tt] = 1
