@@ -7,19 +7,19 @@ from sklearn.model_selection import train_test_split
 #import visualize
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
-genres = ['8Bit Chiptune','Classical','Dance','Dancehall','Deep House',
-'Drum And Bass','Ethnic','Funk','Fusion','Glitch',
-'Hardcore','Hardstyle','Heavy Metal', 'Reggae', 
-'Techno', 'Trip Hop','Weird']
+# genres = ['8Bit Chiptune','Classical','Dance','Dancehall','Deep House',
+# 'Drum And Bass','Ethnic','Funk','Fusion','Glitch',
+# 'Hardcore','Hardstyle','Heavy Metal', 'Reggae', 
+# 'Techno', 'Trip Hop','Weird']
 
-# genres=['Ambient', 'Blues', 'Chill Out','Cinematic','Classical',
-# 'Dance','Drum And Bass','Dubstep','Electro','Ethnic','Funk', 
-# 'Pop','Rap','Techno','Weird']
+genres=['Ambient', 'Blues', 'Chill Out','Cinematic','Classical',
+'Dance','Drum And Bass','Dubstep','Electro','Ethnic','Funk', 
+'Pop','Rap','Techno','Weird']
 #print(len(genres))#15
 
 
 version = input('Enter Version Name:')
-size = 100
+size = 200
 batch_size = 64
 epochs = 100
 def CNN():
@@ -69,25 +69,25 @@ def load_data(inf=''):
     data.append(np.array(lbls))
     return data
 
-def _load_data(inf=''):
-    dataset = []
-    for m in ['train', 'test']:
-        data = []
-        names = [n.strip() for n in open(os.path.join(inf, 'filename_'+m+'.txt'),'r').readlines()]
-        data.append(np.array(names))
-        data.append(np.load(os.path.join(inf, 'spec_'+m+'.npy')))
-        lbls = [n.strip() for n in open(os.path.join(inf, 'label_'+m+'.txt'),'r').readlines()]
-        data.append(np.array(lbls))
-        dataset.append(data)
-    return dataset[0], dataset[1]
+# def _load_data(inf=''):
+#     dataset = []
+#     for m in ['train', 'test']:
+#         data = []
+#         names = [n.strip() for n in open(os.path.join(inf, 'filename_'+m+'.txt'),'r').readlines()]
+#         data.append(np.array(names))
+#         data.append(np.load(os.path.join(inf, 'spec_'+m+'.npy')))
+#         lbls = [n.strip() for n in open(os.path.join(inf, 'label_'+m+'.txt'),'r').readlines()]
+#         data.append(np.array(lbls))
+#         dataset.append(data)
+#     return dataset[0], dataset[1]
 
 # (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
-(train_name, train_images, train_labels), (test_name, test_images, test_labels) = _load_data()
+#(train_name, train_images, train_labels), (test_name, test_images, test_labels) = _load_data()
 #print(train_name.shape, train_images.shape, train_labels.shape)
 #print(test_name.shape, test_images.shape, test_labels.shape)
 
-#names, imgs, labels = load_data()
-#train_names, test_names, train_imgs, test_imgs, train_labels, test_labels = train_test_split(names, imgs, labels, test_size=0.3, random_state=44)
+names, imgs, labels = load_data()
+train_names, test_names, train_images, test_images, train_labels, test_labels = train_test_split(names, imgs, labels, test_size=0.3, random_state=44)
 
 train_images = train_images.reshape(-1, size, size, 3).astype('float32') / 255.0
 test_images = test_images.reshape(-1, size, size, 3).astype('float32') / 255.0 
@@ -104,8 +104,8 @@ model.save_weights(checkpoint_path.format(epoch=0))
 
 history = model.fit(train_images, train_labels,
           epochs = epochs, callbacks = [cp_callback],
-          validation_data = (test_images,test_labels),
-          #validation_split=0.2, 
+          #validation_data = (test_images,test_labels),
+          validation_split=0.2, 
           batch_size=batch_size, verbose=1)  
 
 
