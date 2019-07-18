@@ -1,14 +1,16 @@
 import tensorflow as tf
 #from tensorflow import keras
-import keras
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten, Dropout
-from keras.layers import BatchNormalization, AveragePooling2D, concatenate, Input
-from keras.optimizers import Adam
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten, Dropout
+from tensorflow.keras.layers import BatchNormalization, AveragePooling2D, concatenate, Input
+from tensorflow.keras.optimizers import Adam
 import numpy as np
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
+def CNN(width, height, depth, classes_num):
+    #return VGG16Net(width, height, depth, classes_num)
+    return AlexNet(width, height, depth, classes_num)
 #################################################
 #Define convolution with batchnromalization
 def Conv2d_BN(x, nb_filter,kernel_size, padding='same',strides=(1,1),name=None):
@@ -227,7 +229,7 @@ def LetNet(width, height, depth, classes_num):
 
     return model
 
-def CNN(width, height, depth, classes_num):
+def _CNN(width, height, depth, classes_num):
     cnn_model = Sequential([
     
         Conv2D(filters=32, kernel_size=(3, 3), 

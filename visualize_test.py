@@ -60,10 +60,6 @@ img_tensor = np.expand_dims(img_tensor, axis=0)
 img_tensor /= 255.
 
 print(img_tensor.shape)
-
-#plt.imshow(img_tensor[0])
-#plt.show()
-
 layer_names = []
 for layer in m.layers: layer_names.append(layer.name)
 
@@ -96,10 +92,22 @@ test_labels = np_utils.to_categorical(test_labels, num_classes=len(genres))
 loss, acc = m.evaluate(test_images, test_labels)
 print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 print('==================')
-#plot_model(m, to_file='history/{}/{}_model.png'.format(version,version), show_shapes=True, show_layer_names=True)
+visualize.plot_model(m, to_file='history/{}/{}_model.png'.format(version,version), show_shapes=True, show_layer_names=True)
 
 print('Plot')
 #plot_confusion_matrix(np.array([np.argmax(y) for y in m.predict(test_images)]), test_labels, classes=genres)
 visualize.plot_confusion_matrix(m.predict(test_images), test_labels, classes=genres,version=version)
 
 
+import random
+new_model = m
+ind = random.randint(0, len(test_images))
+img = test_images[ind]
+print('Test_image:'+ test_names[ind])
+layer_outputs = [layer.output for layer in new_model.layers]
+activation_model = keras.models.Model(inputs=new_model.input, outputs=layer_outputs)
+activations = activation_model.predict(img.reshape(1,size,size,3))
+
+print('--- Plot Feature Map')
+layer_names = [layer.name for layer in new_model.layers]
+visualize.tiled_save_activations(layer_names, activations, version=version)

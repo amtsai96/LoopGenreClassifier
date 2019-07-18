@@ -6,10 +6,8 @@ import xlrd
 import json
 import random
 import os
-import sys
 import re
 import datetime
-
 ####
 total_index = max(int(input('Enter start "total_index":')), 0)  # for dataset
 last_Page = max(int(input('Enter start "last_page":')), 0)
@@ -140,7 +138,7 @@ def getfiles(browser, isFirst):
         author = browser.find_elements_by_xpath(
             "//div[@class='player-sub-title']/a[@class='icon-small icon-user']")[0].text
         print(">", title, "---", author)
-        print(">", title, "---", author, file=open(log_file, 'a'))
+        print(">", title, "---", author, file=open(log_file, 'a', encoding='utf-8'))
         tags = []
         tags_list = browser.find_elements_by_xpath(
             "//*[@id='body-left']/div[3]/a")
