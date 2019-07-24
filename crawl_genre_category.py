@@ -12,12 +12,11 @@ import re
 ####
 download_path = 'C:/Users/amandatsai/Downloads'
 
-def get_list(browser, f, num, f2=None):
+def get_list(browser, f, num, mode, f2=None):
     all_list = []
-    num=40
     with open(f,'w') as o:
         for i in range(1, num+1):
-            s = Select(browser.find_element_by_name('cid'))
+            s = Select(browser.find_element_by_name(mode))
             s.select_by_index(i)
             name = s.first_selected_option.text
             print(name)
@@ -32,10 +31,12 @@ def main():
     mode = int(input('Enter mode(genre=1, cat=0):'))
     #num = int(input('enter num(genre=64, cat=40):'))
     if mode == 0:
+        id_name = 'cid'
         num = 40
         f = 'categories.txt'
         f2 = 'category_list.txt'
     else:
+        id_name = 'gid'
         num = 64
         f = 'genres.txt'
         f2 = 'genre_list.txt'
@@ -53,7 +54,7 @@ def main():
     browser.get('https://www.looperman.com/loops')
     #os.chdir(download_path)
 
-    get_list(browser, f, num, f2)
+    get_list(browser, f, num, id_name, f2)
 
 
 if __name__ == "__main__":

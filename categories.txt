@@ -1,0 +1,40 @@
+Accordion
+Arpeggio
+Bagpipe
+Banjo
+Bass
+Bass Guitar
+Bass Synth
+Bass Wobble
+Beatbox
+Bells
+Brass
+Choir
+Clarinet
+Didgeridoo
+Drum
+Flute
+Fx
+Groove
+Guitar Acoustic
+Guitar Electric
+Harmonica
+Harp
+Harpsichord
+Mandolin
+Orchestral
+Organ
+Pad
+Percussion
+Piano
+Rhodes Piano
+Scratch
+Sitar
+Soundscapes
+Strings
+Synth
+Tabla
+Ukulele
+Violin
+Vocal
+Woodwind

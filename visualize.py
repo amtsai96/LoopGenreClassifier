@@ -5,23 +5,24 @@ from keras.utils import np_utils
 from keras.utils.vis_utils import plot_model
 import pandas as pd
 import seaborn as sn
+#from sklearn.metrics import confusion_matrix
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
-def save_activations(activations, col_size, row_size, act_index, name, img_name, version): 
-    activation = activations[act_index]
-    print(name, activation.shape)
-    activation_index=0
-    fig, ax = plt.subplots(row_size, col_size, figsize=(row_size*2.5,col_size*1.5))
-    for row in range(0,row_size):
-        for col in range(0,col_size):
-            if activation_index < activation.shape[-1] and len(activation.shape) == 4:
-                ax[row][col].imshow(activation[0, :, :, activation_index])
-            else:
-                ax[row][col].axis('off')
-            activation_index += 1
-    fig.suptitle('{} -- layer{}:{} with img:{}'.format(version, act_index+1, name, img_name))
-    plt.savefig('{}_layer{}_{}.png'.format(version, act_index+1, name), bbox_inches='tight', pad_inches=0.0)
-    plt.close()
+def save_activations(layer_names, activations, version, col_size=10, row_size=10): 
+    i=0
+    for layer_name, layer_activation in zip(layer_names, activations):
+        i += 1
+        activation_index = 0
+        fig, ax = plt.subplots(row_size, col_size, figsize=(row_size*2.5,col_size*1.5))
+        for row in range(0,row_size):
+            for col in range(0,col_size):
+                if activation_index < layer_activation.shape[-1] and len(layer_activation.shape) == 4:
+                    ax[row][col].imshow(layer_activation[0, :, :, activation_index])
+                else: ax[row][col].axis('off')
+                activation_index += 1
+        fig.suptitle('{} -- layer{}:{}'.format(version, i, layer_name))
+        plt.savefig('{}_layer{}_{}.png'.format(version, i, layer_name), bbox_inches='tight', pad_inches=0.0)
+        plt.close()
 
 def tiled_save_activations(layer_names, activations, version, images_per_row = 16):
     i=0
@@ -57,25 +58,24 @@ def tiled_save_activations(layer_names, activations, version, images_per_row = 1
         plt.savefig('{}_layer{}_{}.png'.format(version, i, layer_name), bbox_inches='tight', pad_inches=0.0)
     plt.close()
 
-def plot_confusion_matrix(y_actu, y_pred, classes, version, title='Confusion_Matrix'):
+def plot_confusion_matrix(y_actu, y_pred, classes, version, title='Confusion_Matrix', fontsize=10):
+    #y_actu = [np.argmax(y) for y in y_actu]
+    #y_pred = [np.argmax(y) for y in y_pred]
+    #cm = confusion_matrix(y_actu, y_pred)
+    #df_confusion = pd.DataFrame(cm, index=classes, columns=classes)
     y_actu = pd.Series([classes[int(np.argmax(y))] for y in y_actu], name='Actual')
     y_pred = pd.Series([classes[int(np.argmax(y))] for y in y_pred], name='Predicted')
+    accuracy = (y_pred == y_actu).mean()
     df_confusion = pd.crosstab(y_actu, y_pred, margins=True)
 
-    plt.figure(figsize = (10,7))
-    plt.title(version+' '+title)
-    cmap = sn.cubehelix_palette(light=1, as_cmap=True)
-    sn.set(font_scale=0.9)
-    sn.heatmap(df_confusion, cmap=cmap, annot=True, fmt='d',annot_kws={"size": 14})
-
-    #plt.matshow(df_confusion, cmap=cmap) # imshow
-    #plt.colorbar()
-    #tick_marks = np.arange(len(df_confusion.columns))
-    #plt.xticks(tick_marks, df_confusion.columns, rotation=45)
-    #plt.yticks(tick_marks, df_confusion.index)
-    #plt.ylabel(df_confusion.index.name)
-    #plt.xlabel(df_confusion.columns.name)
-    plt.savefig(version+'_'+title+'.png', bbox_inches='tight', pad_inches=0.0)
+    plt.figure(figsize = (10, 7))
+    plt.title('{} {}, Accuracy = {:.4f}'.format(version, title, accuracy))
+    cmap = sn.cubehelix_palette(8, as_cmap=True)
+    heatmap = sn.heatmap(df_confusion, cmap=cmap, annot=True, fmt='d')
+    heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
+    heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
+    plt.autoscale()
+    plt.savefig(version+'_'+title+'.png', bbox_inches = 'tight', pad_inches=0.0)
     #plt.show()
     plt.close()
 

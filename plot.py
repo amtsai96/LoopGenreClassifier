@@ -11,10 +11,12 @@ K_FLAG = True#False
 FILES_VER = False#True
 
 dataf = input('Enter data file name:')
-out_g = 'dataset_GENRE.txt'#input('Enter output data file name:')
-out_c = 'dataset_CATEGORY.txt'
-out_b = 'dataset_BPM.txt'
-out_k = 'dataset_KEY.txt'
+outfd = input('Enter output folder:')
+if not os.path.exists(outfd): os.makedirs(outfd)
+out_g = os.path.join(outfd, 'dataset_GENRE.txt')
+out_c = os.path.join(outfd, 'dataset_CATEGORY.txt')
+out_b = os.path.join(outfd, 'dataset_BPM.txt')
+out_k = os.path.join(outfd, 'dataset_KEY.txt')
 genres = ['8Bit Chiptune', 'Acid', 'Acoustic', 'Ambient', 'Big Room', 'Blues', 'Boom Bap', 'Breakbeat', 'Chill Out', 'Cinematic', 'Classical', 'Comedy', 'Country', 'Crunk', 'Dance', 'Dancehall', 'Deep House', 'Dirty', 'Disco', 'Drum And Bass', 'Dub', 'Dubstep', 'EDM', 'Electro', 'Electronic', 'Ethnic', 'Folk', 'Funk', 'Fusion', 'Garage', 'Glitch', 'Grime', 'Grunge', 'Hardcore', 'Hardstyle', 'Heavy Metal', 'Hip Hop', 'House', 'Indie', 'Industrial', 'Jazz', 'Jungle', 'Lo-Fi', 'Moombahton', 'Orchestral', 'Pop', 'Psychedelic', 'Punk', 'Rap', 'Rave', 'Reggae', 'Reggaeton', 'Religious', 'RnB', 'Rock', 'Samba', 'Ska', 'Soul', 'Spoken Word', 'Techno', 'Trance', 'Trap', 'Trip Hop', 'Weird']
 categories = ['Accordion', 'Arpeggio', 'Bagpipe', 'Banjo', 'Bass', 'Bass Guitar', 'Bass Synth', 'Bass Wobble', 'Beatbox', 'Bells', 'Brass', 'Choir', 'Clarinet', 'Didgeridoo',
 'Drum', 'Flute', 'Fx', 'Groove', 'Guitar Acoustic', 'Guitar Electric', 'Harmonica', 'Harp', 'Harpsichord', 'Mandolin', 'Orchestral', 'Organ', 'Pad', 'Percussion', 'Piano', 'Rhodes Piano', 'Scratch', 'Sitar', 'Soundscapes', 'Strings', 'Synth', 'Tabla', 'Ukulele', 'Violin', 'Vocal', 'Woodwind']
@@ -91,7 +93,7 @@ if(G_FLAG):
     plt.tick_params(axis='y', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_genres.png', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig(os.path.join(outfd, 'looperman_dataset_genres.png'), bbox_inches='tight', pad_inches=0.0)
     #plt.show()
     plt.close()
 
@@ -115,7 +117,7 @@ if(C_FLAG):
 
     # Plot - by categories
     plt.figure(figsize=(23, 17), num='Looperman Dataset')
-    plt.barh(y_pos, vs, align='center', alpha=0.5)
+    plt.barh(y_pos, vs, align='center', alpha=0.5, color='plum')
     for a, b in zip(y_pos, vs):
         plt.text(b+0.5, a-1.5, str(b))
     plt.yticks(y_pos, ts)
@@ -126,7 +128,7 @@ if(C_FLAG):
     plt.tick_params(axis='y', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_categories.png', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig(os.path.join(outfd, 'looperman_dataset_categories.png'), bbox_inches='tight', pad_inches=0.0)
     #plt.show()
     plt.close()
 
@@ -160,7 +162,7 @@ if(K_FLAG):
     plt.tick_params(axis='y', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_keys.png', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig(os.path.join(outfd, 'looperman_dataset_keys.png'), bbox_inches='tight', pad_inches=0.0)
     #plt.show()
     plt.close()
 
@@ -192,6 +194,6 @@ if(B_FLAG):
     plt.tick_params(axis='x', which='major', labelsize=7)
     plt.title('Looperman Dataset')
 
-    plt.savefig('looperman_dataset_bpm.png', bbox_inches='tight', pad_inches=0.0)
+    plt.savefig(os.path.join(outfd, 'looperman_dataset_bpm.png'), bbox_inches='tight', pad_inches=0.0)
     #plt.show()
     plt.close()
