@@ -8,7 +8,7 @@ import seaborn as sn
 #from sklearn.metrics import confusion_matrix
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
-def save_activations(layer_names, activations, version, col_size=10, row_size=10): 
+def save_activations(layer_names, activations, version, save_dir, col_size=10, row_size=10): 
     i=0
     for layer_name, layer_activation in zip(layer_names, activations):
         i += 1
@@ -21,10 +21,10 @@ def save_activations(layer_names, activations, version, col_size=10, row_size=10
                 else: ax[row][col].axis('off')
                 activation_index += 1
         fig.suptitle('{} -- layer{}:{}'.format(version, i, layer_name))
-        plt.savefig('{}_layer{}_{}.png'.format(version, i, layer_name), bbox_inches='tight', pad_inches=0.0)
+        plt.savefig(os.path.join(save_dir,'{}_layer{}_{}.png'.format(version, i, layer_name)), bbox_inches='tight', pad_inches=0.0)
         plt.close()
 
-def tiled_save_activations(layer_names, activations, version, images_per_row = 16):
+def tiled_save_activations(layer_names, activations, version, save_dir, images_per_row = 16):
     i=0
     for layer_name, layer_activation in zip(layer_names, activations):
         i+=1
@@ -55,10 +55,10 @@ def tiled_save_activations(layer_names, activations, version, images_per_row = 1
         plt.title('{} -- layer_{}: {}'.format(version, i, layer_name))
         plt.grid(False)
         plt.imshow(display_grid, aspect='auto', cmap='viridis')
-        plt.savefig('{}_layer{}_{}.png'.format(version, i, layer_name), bbox_inches='tight', pad_inches=0.0)
+        plt.savefig(os.path.join(save_dir,'{}_layer{}_{}.png'.format(version, i, layer_name)), bbox_inches='tight', pad_inches=0.0)
     plt.close()
 
-def plot_confusion_matrix(y_actu, y_pred, classes, version, title='Confusion_Matrix', fontsize=10):
+def plot_confusion_matrix(y_actu, y_pred, classes, version, to_file, fontsize=10):
     #y_actu = [np.argmax(y) for y in y_actu]
     #y_pred = [np.argmax(y) for y in y_pred]
     #cm = confusion_matrix(y_actu, y_pred)
@@ -75,7 +75,7 @@ def plot_confusion_matrix(y_actu, y_pred, classes, version, title='Confusion_Mat
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
     plt.autoscale()
-    plt.savefig(version+'_'+title+'.png', bbox_inches = 'tight', pad_inches=0.0)
+    plt.savefig(to_file, bbox_inches = 'tight', pad_inches=0.0)
     #plt.show()
     plt.close()
 

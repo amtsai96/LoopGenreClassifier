@@ -65,7 +65,7 @@ cp_callback = [tf.keras.callbacks.ModelCheckpoint(
     checkpoint_path, verbose=0, save_weights_only=True, period=5),
     tf.keras.callbacks.EarlyStopping(patience=5, monitor="val_acc")]
 
-model = CNN_model.CNN(width, height, depth, len(genres))
+model, model_archi = CNN_model.CNN(width, height, depth, len(genres))
 model.save_weights(checkpoint_path.format(epoch=0))
 
 history = model.fit(train_images, train_labels,
@@ -98,7 +98,7 @@ plt.title('Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
-plt.savefig(os.path.join(root_dir, '{}_loss.png'.format(version)), bbox_inches='tight', pad_inches=0.0)
+plt.savefig(os.path.join(root_dir, '{}_{}_loss.png'.format(version, model_archi)), bbox_inches='tight', pad_inches=0.0)
 plt.close()
 #plt.show()
 
@@ -110,7 +110,7 @@ plt.title('Training and validation accuracy')
 plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend()
-plt.savefig(os.path.join(root_dir, '{}_acc.png'.format(version)), bbox_inches='tight', pad_inches=0.0)
+plt.savefig(os.path.join(root_dir, '{}_{}_acc.png'.format(version, model_archi)), bbox_inches='tight', pad_inches=0.0)
 plt.close()
 #plt.show()
 
@@ -119,7 +119,7 @@ new_model = CNN_model.CNN(width, height, depth, len(genres))
 new_model.summary()
 new_model.load_weights(weight_file)
 loss, acc = new_model.evaluate(test_images, test_labels)
-print("{} Restored model, accuracy: {:5.2f}%".format(version, 100*acc))
+print("{} {}\tRestored model, accuracy: {:5.2f}%".format(version, model_archi, 100*acc))
 print('==================')
 
 '''
@@ -147,11 +147,11 @@ print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 print('--- Plot Confusion Matrix')
 #y_pred = np.array([np.argmax(y) for y in new_model.predict(test_images)])
 y_pred = new_model.predict(test_images)
-visualize.plot_confusion_matrix(y_pred, test_labels, classes=genres, version=version)
+visualize.plot_confusion_matrix(y_pred, test_labels, to_file=os.path.join(root_dir,'{}_{}_Confusion_Matrix.png'.format(version, model_archi)), classes=genres, version=version)
 
 ####### Plot model structure
 print('--- Plot model structure')
-visualize.plot_model(new_model, to_file=os.path.join(root_dir,'{}_model.png'.format(version)), show_shapes=True, show_layer_names=True)
+visualize.plot_model(new_model, to_file=os.path.join(root_dir,'{}_{}_model.png'.format(version, model_archi)), show_shapes=True, show_layer_names=True)
 '''
 ####### Plot Feature Maps
 ind = random.randint(0, len(test_images))

@@ -8,9 +8,8 @@ import json
 import cv2
 import pylab
 
-SPEC = True#False
-
-GEN = False#True
+SPEC = False
+GEN = True
 IMG_ONLY = False
 FOLDER_MODE = True if int(input('FOLDER_MODE?(True=1)')) == 1 else False
 ####################### PARAMS #######################
@@ -30,9 +29,6 @@ if mel: postfix = '_mel'
 else: postfix = ''
 if stretch: postfix += '_stretch'
 if SPEC and FOLDER_MODE:
-    #root = input('Enter output(target) folder:')
-    #txtoutfd = root
-    #infs, outfds = [], []
     for d in os.listdir(rootin):
         if d.startswith('_g'):
             infs.append(os.path.join(rootin,d))
