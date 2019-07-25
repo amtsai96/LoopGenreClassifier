@@ -11,22 +11,13 @@ from tensorflow.keras.models import Model
 import seaborn as sn
 import CNN_model
 import visualize
-
-#from sklearn.metrics import confusion_matrix
 import pandas as pd
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
-# genres = ['8Bit Chiptune','Classical','Dance','Dancehall','Deep House',
-# 'Drum And Bass','Ethnic','Funk','Fusion','Glitch',
-# 'Hardcore','Hardstyle','Heavy Metal', 'Reggae', 
-# 'Techno', 'Trip Hop','Weird']
-
-#genres=['Ambient', 'Blues', 'Chill Out','Cinematic','Classical',
-#'Dance','Drum And Bass','Dubstep','Electro','Ethnic','Funk', 
-#'Pop','Rap','Techno','Weird']
-#print(len(genres))#15
-
-#genres=['Blues','Dance','Drum And Bass','Electro','Funk']
+version = input('Enter Version Name:')
+width, height, depth = 640, 480, 3
+batch_size = 32
+epochs = 30
 
 # 64 genres
 genres=['8Bit Chiptune', 'Acid', 'Acoustic', 'Ambient', 'Big Room', 'Blues', 'Boom Bap', 'Breakbeat', 'Chill Out', 
@@ -42,12 +33,6 @@ categories=['Accordion', 'Arpeggio', 'Bagpipe', 'Banjo', 'Bass', 'Bass Guitar', 
     'Guitar Electric', 'Harmonica', 'Harp', 'Harpsichord', 'Mandolin', 'Orchestral', 'Organ', 'Pad', 'Percussion', 
     'Piano', 'Rhodes Piano', 'Scratch', 'Sitar', 'Soundscapes', 'Strings', 'Synth', 'Tabla', 'Ukulele', 'Violin', 'Vocal', 'Woodwind']
 
-version = input('Enter Version Name:')
-width, height, depth = 200, 200, 3
-batch_size = 32
-epochs = 30
-
-
 def load_data(inf=''):
     data = []
     names = [n.strip() for n in open(os.path.join(inf, 'filename.txt'),'r').readlines()]
@@ -56,21 +41,6 @@ def load_data(inf=''):
     lbls = [n.strip() for n in open(os.path.join(inf, 'label.txt'),'r').readlines()]
     data.append(np.array(lbls))
     return data
-
-# def _load_data(inf=''):
-#     dataset = []
-#     for m in ['train', 'test']:
-#         data = []
-#         names = [n.strip() for n in open(os.path.join(inf, 'filename_'+m+'.txt'),'r').readlines()]
-#         data.append(np.array(names))
-#         data.append(np.load(os.path.join(inf, 'spec_'+m+'.npy')))
-#         lbls = [n.strip() for n in open(os.path.join(inf, 'label_'+m+'.txt'),'r').readlines()]
-#         data.append(np.array(lbls))
-#         dataset.append(data)
-#     return dataset[0], dataset[1]
-
-# (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
-#(train_name, train_images, train_labels), (test_name, test_images, test_labels) = _load_data()
 
 names, imgs, labels = load_data()
 train_names, test_names, train_images, test_images, train_labels, test_labels = train_test_split(names, imgs, labels, test_size=0.3, random_state=42, stratify=labels)
@@ -100,7 +70,6 @@ model.save_weights(checkpoint_path.format(epoch=0))
 
 history = model.fit(train_images, train_labels,
           epochs = epochs, callbacks = cp_callback,
-          #validation_data = (train_images, train_labels),
           validation_data = (test_images,test_labels),
           #validation_split=0.2, 
           shuffle=True,
