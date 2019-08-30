@@ -43,6 +43,7 @@ def load_data(inf=''):
     return data
 
 names, imgs, labels = load_data()
+print(names.shape,imgs.shape,  labels.shape)
 train_names, test_names, train_images, test_images, train_labels, test_labels = train_test_split(names, imgs, labels, test_size=0.3, random_state=42, stratify=labels)
 
 train_images = train_images.reshape(-1, width, height, depth).astype('float32') / 255.0

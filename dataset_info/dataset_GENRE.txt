@@ -1,0 +1,64 @@
+8Bit Chiptune,324
+Acid,178
+Acoustic,25
+Ambient,4350
+Big Room,8
+Blues,1111
+Boom Bap,93
+Breakbeat,751
+Chill Out,4743
+Cinematic,2174
+Classical,1421
+Comedy,48
+Country,165
+Crunk,246
+Dance,3485
+Dancehall,332
+Deep House,855
+Dirty,226
+Disco,269
+Drum And Bass,2910
+Dub,530
+Dubstep,6672
+EDM,204
+Electro,2861
+Electronic,7496
+Ethnic,1031
+Folk,105
+Funk,1302
+Fusion,627
+Garage,212
+Glitch,825
+Grime,152
+Grunge,69
+Hardcore,636
+Hardstyle,513
+Heavy Metal,750
+Hip Hop,3286
+House,3043
+Indie,40
+Industrial,976
+Jazz,922
+Jungle,182
+Lo-Fi,0
+Moombahton,69
+Orchestral,1106
+Pop,1655
+Psychedelic,213
+Punk,123
+Rap,2540
+Rave,176
+Reggae,381
+Reggaeton,292
+Religious,86
+RnB,2990
+Rock,2443
+Samba,96
+Ska,0
+Soul,276
+Spoken Word,109
+Techno,2077
+Trance,2988
+Trap,313
+Trip Hop,355
+Weird,1856

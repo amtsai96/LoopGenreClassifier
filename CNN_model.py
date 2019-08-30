@@ -11,9 +11,9 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
 def CNN(width, height, depth, classes_num):
-    #0722b
-    return ResNet50(width, height, depth, classes_num)
-    #0722a#return ResNet34(width, height, depth, classes_num)
+    return CNN_V4(width, height, depth, classes_num), CNN_V4.__name__
+    #0722b#return ResNet50(width, height, depth, classes_num), ResNet50.__name__
+    #0722a#return ResNet34(width, height, depth, classes_num), ResNet34.__name__
     #return newResNet50(width, height, depth, classes_num)
     ###return _ResNet50(width, height, depth, classes_num)
     #return ResNext50(width, height, depth, classes_num)
@@ -25,12 +25,29 @@ def CNN(width, height, depth, classes_num):
     #return AlexNet(width, height, depth, classes_num)
     #return LeNet(width, height, depth, classes_num)
 #################################################
+def CNN_V4(width, height, depth, classes_num):
+    inpt = Input(shape=(width,height,depth))
+    x = BatchNormalization()(inpt)
+    x = Conv2D(64, 2, activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Conv2D(128, 2, activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Conv2D(256, 2, activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Conv2D(512, 2, activation='relu')(x)
+    x = MaxPooling2D(pool_size=(2, 2))(x)
+    x = Dense(1024, activation='softmax')(x)
+    x = Dropout(rate=0.5)(x)
+    x = BatchNormalization()(Dense(128, activation='relu')(x))
+    x = BatchNormalization()(Dense(128, activation='relu')(x))
+    x = Dense(classes_num, activation='softmax')(x)
 
+    model = Model(inputs=inpt, outputs=x)
 
-
-
-
-
+    model.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08), 
+                    loss='categorical_crossentropy', metrics=['accuracy'])
+    return model
+'''
 def newResNet50(width, height, depth, classes_num):
     from tensorflow.python.keras.applications.resnet50 import ResNet50 as R
     net = R(include_top=False, weights='imagenet', input_tensor=None,
@@ -42,7 +59,7 @@ def newResNet50(width, height, depth, classes_num):
     model = Model(inputs=net.input, outputs=output_layer)
     model.compile(optimizer=Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, epsilon=1e-08),loss = 'categorical_crossentropy',metrics=['accuracy'])
     return model
-
+'''
 #Define Residual Block for ResNet50(3 convolution layers)
 def Residual_Blocks(input_model,nb_filters,kernel_sizes=[(1,1),(3,3),(1,1)],strides=(1,1), with_conv_shortcut=False):
     x = Conv2d_BN(input_model,nb_filter=nb_filters[0],kernel_size=kernel_sizes[0],strides=strides)
@@ -149,7 +166,6 @@ def Residual_Block(input_model,nb_filter,kernel_size,strides=(1,1), with_conv_sh
     else: x = add([x,input_model])
     return x
     
-#Built ResNet34
 def ResNet34(width, height, depth, classes_num):
     Img = Input(shape=(width,height,depth))
     
