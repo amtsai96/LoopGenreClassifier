@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import librosa
 import librosa.display
-#import pyrubberband as pyrb
 import json
 import cv2
 import pylab
@@ -55,17 +54,12 @@ if(GEN):
     'Hardcore', 'Hardstyle', 'Heavy Metal', 'Hip Hop', 'House', 'Indie', 'Industrial', 'Jazz', 'Jungle', 'Lo-Fi', 'Moombahton', 
     'Orchestral', 'Pop', 'Psychedelic', 'Punk', 'Rap', 'Rave', 'Reggae', 'Reggaeton', 'Religious', 'RnB', 'Rock', 'Samba', 'Ska',
     'Soul', 'Spoken Word', 'Techno', 'Trance', 'Trap', 'Trip Hop', 'Weird']
-    #print(len(genres))
     # 40 cates
     categories=['Accordion', 'Arpeggio', 'Bagpipe', 'Banjo', 'Bass', 'Bass Guitar', 'Bass Synth', 'Bass Wobble', 
     'Beatbox', 'Bells', 'Brass', 'Choir', 'Clarinet', 'Didgeridoo', 'Drum', 'Flute', 'Fx', 'Groove', 'Guitar Acoustic', 
     'Guitar Electric', 'Harmonica', 'Harp', 'Harpsichord', 'Mandolin', 'Orchestral', 'Organ', 'Pad', 'Percussion', 
     'Piano', 'Rhodes Piano', 'Scratch', 'Sitar', 'Soundscapes', 'Strings', 'Synth', 'Tabla', 'Ukulele', 'Violin', 'Vocal', 'Woodwind']
-    #print(len(categories))
-    #genres=['Ambient', 'Blues', 'Chill Out','Cinematic','Classical',
-    #'Dance','Drum And Bass','Dubstep','Electro','Ethnic','Funk', 
-    #'Pop','Rap','Techno','Weird']
-    #genres=['Blues','Dance','Drum And Bass','Electro','Funk']
+
 ###################################################### 
 ####################### SPECTROGRAM ####################### 
 def load_wav(inf, wav_file, txtoutfd, txt, stretch=True, target_tempo=120):
@@ -78,8 +72,7 @@ def load_wav(inf, wav_file, txtoutfd, txt, stretch=True, target_tempo=120):
             o.write(wav_file+'\n')
             print('tempo = 0!!!')
     return librosa.effects.time_stretch(sig, float(target_tempo)/tempo), sr
-    #return pyrb.time_stretch(sig, sr, float(target_tempo)/tempo), sr
-
+    
 def graph_spectrogram(outf, wav_file, sig, sr, max_length=0, mel=True):
     if(max_length > 0):
         if sig.shape[0] > max_length: sig = sig[:max_length]

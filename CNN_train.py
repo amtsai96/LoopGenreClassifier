@@ -8,10 +8,8 @@ import random
 from keras.utils import np_utils
 from keras.utils.vis_utils import plot_model
 from tensorflow.keras.models import Model
-import seaborn as sn
 import CNN_model
 import visualize
-import pandas as pd
 os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
 version = input('Enter Version Name:')

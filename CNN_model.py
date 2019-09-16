@@ -12,18 +12,8 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"]='2'
 
 def CNN(width, height, depth, classes_num):
     return CNN_V4(width, height, depth, classes_num), CNN_V4.__name__
-    #0722b#return ResNet50(width, height, depth, classes_num), ResNet50.__name__
-    #0722a#return ResNet34(width, height, depth, classes_num), ResNet34.__name__
-    #return newResNet50(width, height, depth, classes_num)
-    ###return _ResNet50(width, height, depth, classes_num)
-    #return ResNext50(width, height, depth, classes_num)
-    #return CNN_V3(width, height, depth, classes_num)
-    #0721c#return CNN_V2(width, height, depth, classes_num)
-    ##return ResNet34(width, height, depth, classes_num)
-    #return InceptionV1(width, height, depth, classes_num)
-    #return VGG16Net(width, height, depth, classes_num)
-    #return AlexNet(width, height, depth, classes_num)
-    #return LeNet(width, height, depth, classes_num)
+    #return ResNet50(width, height, depth, classes_num), ResNet50.__name__
+    #return ResNet34(width, height, depth, classes_num), ResNet34.__name__
 #################################################
 def CNN_V4(width, height, depth, classes_num):
     inpt = Input(shape=(width,height,depth))
@@ -43,23 +33,10 @@ def CNN_V4(width, height, depth, classes_num):
     x = Dense(classes_num, activation='softmax')(x)
 
     model = Model(inputs=inpt, outputs=x)
-
     model.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08), 
                     loss='categorical_crossentropy', metrics=['accuracy'])
     return model
-'''
-def newResNet50(width, height, depth, classes_num):
-    from tensorflow.python.keras.applications.resnet50 import ResNet50 as R
-    net = R(include_top=False, weights='imagenet', input_tensor=None,
-               input_shape=(width, height, depth))
-    x = net.output
-    x = Flatten()(x)
-    x = Dropout(0.5)(x)
-    output_layer = Dense(classes_num, activation='softmax', name='softmax')(x)
-    model = Model(inputs=net.input, outputs=output_layer)
-    model.compile(optimizer=Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, epsilon=1e-08),loss = 'categorical_crossentropy',metrics=['accuracy'])
-    return model
-'''
+
 #Define Residual Block for ResNet50(3 convolution layers)
 def Residual_Blocks(input_model,nb_filters,kernel_sizes=[(1,1),(3,3),(1,1)],strides=(1,1), with_conv_shortcut=False):
     x = Conv2d_BN(input_model,nb_filter=nb_filters[0],kernel_size=kernel_sizes[0],strides=strides)
