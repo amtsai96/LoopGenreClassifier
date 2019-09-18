@@ -35,11 +35,11 @@ Music Loop Genre Classification with CNN
 - Run the code ```python CNN_train.py``` to train the model.
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/amtsai96/LoopGenreClassifier.svg?style=flat-square
 [contributors-url]: https://github.com/amtsai96/LoopGenreClassifier/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/amtsai96/LoopGenreClassifier.svg?style=flat-square
 [forks-url]: https://github.com/amtsai96/LoopGenreClassifier/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/amtsai96/LoopGenreClassifier.svg?style=flat-square
 [stars-url]: https://github.com/amtsai96/LoopGenreClassifier/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/amtsai96/LoopGenreClassifier.svg?style=flat-square
 [issues-url]: https://github.com/amtsai96/LoopGenreClassifier/issues
